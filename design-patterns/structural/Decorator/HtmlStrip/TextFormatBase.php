@@ -23,7 +23,7 @@ class TextFormatBase implements InputFormat
 
     /**
      * @param $text
-     * @return mixed
+     * @return string
      */
     public function formatText($text)
     {

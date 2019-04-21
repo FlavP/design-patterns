@@ -7,6 +7,10 @@ require_once('TextFormatBase.php');
  */
 class PlainTextFilterDecorator extends TextFormatBase
 {
+    /**
+     * @param $text
+     * @return string
+     */
     public function formatText($text)
     {
         $text = parent::formatText($text);
