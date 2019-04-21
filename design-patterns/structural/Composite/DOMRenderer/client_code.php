@@ -9,7 +9,7 @@ require_once('FormElement.php');
  * @return FormElement
  */
 function getProductForm(){
-    $form = new Form('product_name', 'Product Title: Add Product', '/product_url/add');
+    $form = new Form('name', 'Product Title: Add Product', '/product_url/add');
     $form->add(new Input('input_name', 'Input Title', 'text'));
     $form->add(new Input('description', 'Description', 'textarea'));
 
@@ -30,7 +30,7 @@ function getProductForm(){
  */
 function loadProductData(FormElement $form){
     $data = [
-        "input_name" => "MacBook Pro",
+        "name" => "MacBook Pro",
         "description" => "Very pretty",
         "photo" => [
             "caption" => "Screen photo",
