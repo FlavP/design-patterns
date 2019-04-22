@@ -22,11 +22,11 @@ class Facade{
 
     public function operation(){
         $result = "Facade initializes subsystems:\n";
-        $result .= $this->subsystem1->operation1;
-        $result .= $this->subsystem2->operation1;
+        $result .= $this->subsystem1->operation1();
+        $result .= $this->subsystem2->operation1();
         $result .= "Facade orders subsystems to perform the action:\n";
-        $result .= $this->subsystem1->operationN;
-        $result .= $this->subsystem2->operationN;
+        $result .= $this->subsystem1->operationN();
+        $result .= $this->subsystem2->operationZ();
         return $result;
     }
 }
@@ -51,7 +51,7 @@ class Subsystem2{
     }
 }
 function clientCode(Facade $facade){
-    $facade->operation();
+    echo $facade->operation();
 }
 
 $subsystem1 = new Subsystem1();
