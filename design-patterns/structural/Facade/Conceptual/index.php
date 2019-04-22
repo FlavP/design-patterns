@@ -21,6 +21,40 @@ class Facade{
     }
 
     public function operation(){
-        $result = '';
+        $result = "Facade initializes subsystems:\n";
+        $result .= $this->subsystem1->operation1;
+        $result .= $this->subsystem2->operation1;
+        $result .= "Facade orders subsystems to perform the action:\n";
+        $result .= $this->subsystem1->operationN;
+        $result .= $this->subsystem2->operationN;
+        return $result;
     }
 }
+
+class Subsystem1{
+    public function operation1(){
+        return "Starting engines in Subsystem 1\n";
+    }
+
+    public function operationN(){
+        return "Subsystem1: GO! \n";
+    }
+}
+
+class Subsystem2{
+    public function operation1(){
+        return "Starting engines in Subsystem 2\n";
+    }
+
+    public function operationZ(){
+        return "Subsystem2: Fire! \n";
+    }
+}
+function clientCode(Facade $facade){
+    $facade->operation();
+}
+
+$subsystem1 = new Subsystem1();
+$subsystem2 = new Subsystem2();
+$facade = new Facade($subsystem1, $subsystem2);
+clientCode($facade);
