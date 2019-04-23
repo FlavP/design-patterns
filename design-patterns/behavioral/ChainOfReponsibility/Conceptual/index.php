@@ -21,7 +21,7 @@ class BaseHandler implements Handler{
 
     public function handle($request)
     {
-        if($this->next->handle($request))
+        if($this->next)
             return $this->next->handle($request);
         return null;
     }
@@ -61,7 +61,7 @@ class DogHandler extends BaseHandler{
 }
 
 function clientCode(Handler $handler){
-    foreach (['Peanut', 'Banana, Biscuits'] as $food){
+    foreach (['Peanut', 'Banana', 'Biscuits'] as $food){
         echo "Client: Who wants a " . $food . "?\n";
         $result = $handler->handle($food);
         if($result)
