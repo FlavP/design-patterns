@@ -10,8 +10,10 @@ $server->register('admin@example.com', 'admin_pass');
 $server->register('user@plm.com', 'user_pass');
 
 $throtMid = new ThrottlingMiddleware(2);
-$throtMid->linkWith(new UserExistsMiddleware($server));
-$throtMid->linkWith(new RoleCheckMiddleware());
+$throtMid
+    ->linkWith(new UserExistsMiddleware($server))
+    ->linkWith(new RoleCheckMiddleware());
+$server->setMiddleware($throtMid);
 
 // Facem un do while in care cer loginul
 // pana avem o autentificare reusita

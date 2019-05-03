@@ -14,7 +14,7 @@ class Middleware
      * @return Middleware
      */
     public function linkWith(Middleware $next){
-        $this->next;
+        $this->next = $next;
         return $next;
     }
 
@@ -27,8 +27,10 @@ class Middleware
      * @return bool
      */
     public function check($email, $password){
-        if ($this->next)
+        if (!$this->next) {
             return true;
+        }
+
         return $this->next->check($email, $password);
     }
 }
