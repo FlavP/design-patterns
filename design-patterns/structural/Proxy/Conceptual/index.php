@@ -46,5 +46,5 @@ $normalSubject = new RealSubject();
 clientCode($normalSubject);
 
 echo "Using a proxy subject \n";
-$proxySubject = new ProxySubject($normalSubject);
+$proxySubject = new ProxySubject();
 clientCode($proxySubject);
