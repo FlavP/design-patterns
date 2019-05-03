@@ -1,13 +1,13 @@
 <?php
 
-interface Command{
+interface MyCommand{
     public function execute();
 }
 
 /**
  * Class SimpleCommand
  */
-class SimpleCommand implements Command {
+class SimpleCommand implements MyCommand {
     private $payload;
 
     /**
@@ -30,7 +30,7 @@ class SimpleCommand implements Command {
  * Some complex commands can delegate their work to other objects called receivers
  * Class ComplexCommand
  */
-class ComplexCommand implements Command {
+class ComplexCommand implements MyCommand {
     private $a, $b, $receiver;
 
     /**
@@ -83,17 +83,17 @@ class Invoker {
     private $doAfter;
 
     /**
-     * @param Command $doAfter
+     * @param MyCommand $doAfter
      */
-    public function setDoAfter(Command $doAfter)
+    public function setDoAfter(MyCommand $doAfter)
     {
         $this->doAfter = $doAfter;
     }
 
     /**
-     * @param Command $doBefore
+     * @param MyCommand $doBefore
      */
-    public function setDoBefore(Command $doBefore)
+    public function setDoBefore(MyCommand $doBefore)
     {
         $this->doBefore = $doBefore;
     }
@@ -115,7 +115,7 @@ class Invoker {
 // Construim un receiver si apelam o comanda la sfarsit
 
 $invoker = new Invoker();
-$invoker->setDoBefore(new SimpleCommand());
+$invoker->setDoBefore(new SimpleCommand("Say Hi!"));
 $receiver = new Receiver();
 $invoker->setDoAfter(new ComplexCommand($receiver, "Do First", "Do After"));
 $invoker->doSomethingImportant();

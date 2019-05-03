@@ -6,7 +6,7 @@
  * Concrete Iterators implement various traversal algorithms. These classes
  * store the current traversal position at all times.
  */
-class WordIterator implements \Iterator {
+class WordIterator implements Iterator {
     /**
      * @var WordsCollection
      */
@@ -24,7 +24,7 @@ class WordIterator implements \Iterator {
     public function rewind()
     {
         // Collection's starting position
-        $this->position = $this->reverse ? count($this->collection) - 1 : 0;
+        $this->position = $this->reverse ? count($this->collection->getItems()) - 1 : 0;
     }
 
     public function key()
@@ -52,7 +52,7 @@ class WordIterator implements \Iterator {
  * Concrete Collections provide one or several methods for retrieving fresh
  * iterator instances, compatible with the collection class.
  */
-class WordsCollection implements \IteratorAggregate{
+class WordsCollection implements IteratorAggregate{
     //cream getter si add item, de asemenea 2 metode, una care returneaza un iterator normal, alta un iterator reverse
     private $items = [];
 
