@@ -13,7 +13,7 @@ class Plain extends Tile {
     }
 }
 
-abstract class PlainDecorator extends Tile {
+abstract class TileDecorator extends Tile {
     protected $tile;
 
     public function __construct(Tile $tile)
@@ -22,7 +22,7 @@ abstract class PlainDecorator extends Tile {
     }
 }
 
-class DiamondDecorator extends PlainDecorator {
+class DiamondDecorator extends TileDecorator {
 
     public function getWealthFactor()
     {
@@ -30,7 +30,7 @@ class DiamondDecorator extends PlainDecorator {
     }
 }
 
-class PolutionDecorator extends PlainDecorator {
+class PolutionDecorator extends TileDecorator {
 
     public function getWealthFactor()
     {
