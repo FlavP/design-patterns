@@ -75,17 +75,83 @@ class VariableExpression extends Expression {
     }
 }
 
+//$context = new InterpreterContext();
+//$someVar = new VariableExpression('input', 'four');
+//$someVar->interpret($context);
+//print $context->lookup($someVar) . "\n";
+//
+//
+//$newvar = new VariableExpression('input');
+//$newvar->interpret($context);
+//print $context->lookup($newvar) . "\n";
+//
+//$someVar->setValue('five');
+//$someVar->interpret($context);
+//print $context->lookup($someVar) . "\n";
+//print $context->lookup($newvar) . "\n";
+
+abstract class OperatorExpression extends Expression {
+    private $l_op;
+    private $r_op;
+
+    public function __construct(Expression $l_op, Expression $r_op)
+    {
+        $this->l_op = $l_op;
+        $this->r_op = $r_op;
+    }
+
+    public function interpret(InterpreterContext $context)
+    {
+        $this->r_op->interpret($context);
+        $this->l_op->interpret($context);
+        $result_l = $context->lookup($this->l_op);
+        $result_r = $context->lookup($this->r_op);
+
+        $this->doInterpret($context, $result_l, $result_r);
+    }
+
+    abstract protected function doInterpret(
+        InterpreterContext $context,
+        $result_l,
+        $result_r
+    );
+}
+
+class EqualsExpression extends OperatorExpression {
+    protected function doInterpret(InterpreterContext $context, $result_l, $result_r)
+    {
+        $context->replace($this, $result_r == $result_l);
+    }
+}
+
+class BooleanOrExpression extends OperatorExpression {
+    protected function doInterpret(InterpreterContext $context, $result_l, $result_r)
+    {
+        $context->replace($this, $result_r || $result_l);
+    }
+}
+
+class BooleanAndExpression extends OperatorExpression {
+    protected function doInterpret(InterpreterContext $context, $result_l, $result_r)
+    {
+        $context->replace($this, $result_r && $result_l);
+    }
+}
+
 $context = new InterpreterContext();
-$someVar = new VariableExpression('input', 'four');
-$someVar->interpret($context);
-print $context->lookup($someVar) . "\n";
+$input = new VariableExpression('input');
+$statement = new BooleanOrExpression(
+    new EqualsExpression($input, 'four'),
+    new EqualsExpression($input, '4')
+);
 
 
-$newvar = new VariableExpression('input');
-$newvar->interpret($context);
-print $context->lookup($newvar) . "\n";
-
-$someVar->setValue('five');
-$someVar->interpret($context);
-print $context->lookup($someVar) . "\n";
-print $context->lookup($newvar) . "\n";
+foreach (["four", "4", "52"] as $item) {
+    $input->setValue($item);
+    print "$item:\n";
+    $statement->interpret($context);
+    if ($context->lookup($statement))
+        print "Yes\n\n\n";
+    else
+        print "No\n\n\n";
+}
