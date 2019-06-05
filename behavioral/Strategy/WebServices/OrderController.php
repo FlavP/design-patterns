@@ -1,5 +1,5 @@
 <?php
-require_once('PaymentMethod.php');
+require_once('PaymentFactory.php');
 require_once('Order.php');
 
 class OrderController
@@ -23,7 +23,7 @@ class OrderController
             $this->getAllOrders();
         elseif (preg_match('#^/order/([0-9]+?)/payment/([a-z]+?)(/return)?$#', $path, $matches)){
             $order = Order::get($matches[1]);
-            $paymentMethod = PaymentMethod::getPaymentMethod($matches[2]);
+            $paymentMethod = PaymentFactory::getPaymentMethod($matches[2]);
             if (!isset($matches[3]))
                 $this->getPayment($paymentMethod, $order, $data);
             else

@@ -6,7 +6,7 @@
 // SomebusinessLogic
 
 class Subject implements \SplSubject{
-    protected $state;
+    public $state;
     protected $observers;
 
     public function __construct()
